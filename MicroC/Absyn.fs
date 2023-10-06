@@ -3,6 +3,9 @@
    sestoft@itu.dk 2009-09-25
 
    Must precede Interp.fs, Comp.fs and Contcomp.fs in Solution Explorer
+   
+   Recursive Rebels have:
+   Added PreInc and PreDec to expr type 
  *)
 
 module Absyn
@@ -23,6 +26,8 @@ and expr =
   | Andalso of expr * expr           (* Sequential and              *)
   | Orelse of expr * expr            (* Sequential or               *)
   | Call of string * expr list       (* Function call f(...)        *)
+  | PreInc of access
+  | PreDec of access 
                                                                    
 and access =                                                       
   | AccVar of string                 (* Variable access        x    *) 

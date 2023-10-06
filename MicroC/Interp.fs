@@ -23,6 +23,10 @@
    The return statement is not implemented (for simplicity), so all
    functions should have return type void.  But there is as yet no
    typecheck, so be careful.
+
+
+   Recursive Rebels have:
+   Added PreInc and PreDec to eval function
  *)
 
 module Interp
@@ -157,7 +161,13 @@ and eval e locEnv gloEnv store : int * store =
                         (getSto store1 loc, store1) 
     | Assign(acc, e) -> let (loc, store1) = access acc locEnv gloEnv store
                         let (res, store2) = eval e locEnv gloEnv store1
-                        (res, setSto store2 loc res) 
+                        (res, setSto store2 loc res)
+    | PreInc acc -> let (loc, store1) = access acc locEnv gloEnv store
+                    let res = (getSto store1 loc) + 1
+                    (res, setSto store1 loc res)
+    | PreDec acc -> let (loc, store1) = access acc locEnv gloEnv store
+                    let res = (getSto store1 loc) - 1
+                    (res, setSto store1 loc res)
     | CstI i         -> (i, store)
     | Addr acc       -> access acc locEnv gloEnv store
     | Prim1(ope, e1) ->
